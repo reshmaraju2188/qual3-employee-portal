@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Qual3 Technology | Employee Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<header>
+    <img src="logo.png">
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="holidays.html">Holidays</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>Welcome to Qual3 Technology</h2>
+        <div id="time"></div>
+    </div>
+
+    <div class="card">
+        <h3>Company Calendar</h3>
+
+        <select id="yearSelect" onchange="updateCalendar()">
+            <option value="">Select Year</option>
+            <option>2024</option>
+            <option>2025</option>
+            <option>2026</option>
+        </select>
+
+        <select id="monthSelect" onchange="updateCalendar()">
+            <option value="">Select Month</option>
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+        </select>
+
+        <div id="monthYear"></div>
+        <div id="calendar"></div>
+    </div>
+
+    <div class="card">
+    <h3>Employee Timesheet</h3>
+
+    <label>Date:</label><br>
+    <input type="date" id="tsDate"><br><br>
+
+    <label>Hours Worked:</label><br>
+    <input type="number" id="tsHours" min="1" max="24" placeholder="Enter hours"><br><br>
+
+    <label>Work Description:</label><br>
+    <textarea id="tsTask" rows="4" placeholder="Describe your work"></textarea><br><br>
+
+    <button onclick="submitTimesheet()">Submit Timesheet</button>
+
+    <div id="tsMessage"></div>
+</div>
+
+</div>
+
+
+
+<footer>
+    © 2025 Qual3 Technology
+</footer>
+
+</body>
+</html>
