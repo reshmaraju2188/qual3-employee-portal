@@ -46,6 +46,7 @@ const holidayData = {
     }
 };
 
+
 /* Generate Calendar */
 function generateCalendar(year, month) {
     if (!year || month === "") return;
@@ -53,18 +54,18 @@ function generateCalendar(year, month) {
     const calendar = document.getElementById("calendar");
     const monthYear = document.getElementById("monthYear");
 
-    const date = new Date(year, month);
+    const monthNum = parseInt(month);
     const today = new Date();
 
-    const daysInMonth = new Date(year, parseInt(month) + 1, 0).getDate();
-    const startDay = date.getDay();
+    const daysInMonth = new Date(year, monthNum + 1, 0).getDate();
+    const startDay = new Date(year, monthNum, 1).getDay();
 
     const months = [
         "January","February","March","April","May","June",
         "July","August","September","October","November","December"
     ];
 
-    monthYear.innerText = `${months[month]} ${year}`;
+    monthYear.innerText = `${months[monthNum]} ${year}`;
 
     let table = "<table><tr>";
     const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
@@ -76,36 +77,48 @@ function generateCalendar(year, month) {
     }
 
     const yearHolidays = holidayData[year] || {};
-    const monthKey = String(parseInt(month) + 1).padStart(2, "0");
+    const monthKey = String(monthNum + 1).padStart(2, "0");
 
     for (let day = 1; day <= daysInMonth; day++) {
-        let dateKey = `${monthKey}-${String(day).padStart(2, "0")}`;
+
+        const dateKey = `${monthKey}-${String(day).padStart(2, "0")}`;
         let className = "";
-        let titleText = "";
 
-        if (yearHolidays[dateKey]) {
-            className = "holiday";
-            titleText = yearHolidays[dateKey];
-        }
-
+        // highlight today
         if (
             day === today.getDate() &&
             year == today.getFullYear() &&
-            month == today.getMonth()
+            monthNum === today.getMonth()
         ) {
-            className += " today";
+            className = "today";
         }
 
-        table += `<td class="${className}" title="${titleText}">${day}</td>`;
+        // holiday day cell
+        if (yearHolidays[dateKey]) {
+            table += `
+                <td class="holiday ${className}">
+                    <strong>${day}</strong>
+                    <span class="holiday-name">${yearHolidays[dateKey]}</span>
+                </td>
+            `;
+        } else {
+            table += `<td class="${className}">${day}</td>`;
+        }
 
         if ((day + startDay) % 7 === 0) {
             table += "</tr><tr>";
         }
     }
 
-    table += "</tr></table>";
+    // close last row if incomplete
+    if ((daysInMonth + startDay) % 7 !== 0) {
+        table += "</tr>";
+    }
+
+    table += "</table>";
     calendar.innerHTML = table;
 }
+
 
 function updateCalendar() {
     const year = document.getElementById("yearSelect").value;
@@ -113,6 +126,8 @@ function updateCalendar() {
     generateCalendar(year, month);
 }
 
+
+/* Timesheet Submit */
 function submitTimesheet() {
     const date = document.getElementById("tsDate").value;
     const hours = document.getElementById("tsHours").value;
@@ -129,9 +144,58 @@ function submitTimesheet() {
         "✅ Timesheet submitted successfully!";
     document.getElementById("tsMessage").style.color = "green";
 
-    // Clear fields
     document.getElementById("tsDate").value = "";
     document.getElementById("tsHours").value = "";
     document.getElementById("tsTask").value = "";
+}
+
+
+/* Logout */
+function logoutUser() {
+    // Use this for Azure Static Web Apps + Entra ID
+    window.location.href = "/.auth/logout?post_logout_redirect_uri=/login.html";
+
+    // If NOT using Entra ID, use:
+    // window.location.href = "login.html";
+}
+
+/* ----- Approval Requests Storage (Temporary) ----- */
+let approvals = JSON.parse(localStorage.getItem("approvals") || "[]");
+
+/* Submit Request */
+function submitRequest() {
+
+    const managerEmail = document.getElementById("mgrEmail").value;
+    const approvalType = document.getElementById("reqType").value;
+    const reason = document.getElementById("reqMsg").value;
+    const status = document.getElementById("reqStatus");
+
+    if (!managerEmail || !approvalType || !reason) {
+        status.innerText = "❌ Please fill all fields";
+        return;
+    }
+
+    fetch("https://prod-26.centralus.logic.azure.com:443/workflows/397fa07361cc425ea8046d8327ddb70a/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=JmJjYRlnoyeXwbNob7nPrcrIvzbQCT3ZLpWSyWsukkA", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            managerEmail: managerEmail,
+            employeeEmail: "employee@qual3.com",
+            approvalType: approvalType,
+            reason: reason
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            status.innerText = "✅ Approval request sent to manager";
+        } else {
+            status.innerText = "❌ Failed to send request";
+        }
+    })
+    .catch(() => {
+        status.innerText = "❌ Error sending request";
+    });
 }
 

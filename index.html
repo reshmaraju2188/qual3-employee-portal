@@ -10,18 +10,21 @@
 <header>
     <img src="logo.png">
     <nav>
-        <a href="index.html">Home</a>
-        <a href="holidays.html">Holidays</a>
+        <button onclick="logoutUser()" class="logout-btn">
+            Sign Out
+        </button>
     </nav>
 </header>
 
 <div class="container">
 
+    <!-- Welcome Section -->
     <div class="card">
         <h2>Welcome to Qual3 Technology</h2>
         <div id="time"></div>
     </div>
 
+    <!-- Calendar Section -->
     <div class="card">
         <h3>Company Calendar</h3>
 
@@ -52,26 +55,55 @@
         <div id="calendar"></div>
     </div>
 
+    <!-- Timesheet Section -->
     <div class="card">
-    <h3>Employee Timesheet</h3>
+        <h3>Employee Timesheet</h3>
 
-    <label>Date:</label><br>
-    <input type="date" id="tsDate"><br><br>
+        <label>Date:</label><br>
+        <input type="date" id="tsDate"><br><br>
 
-    <label>Hours Worked:</label><br>
-    <input type="number" id="tsHours" min="1" max="24" placeholder="Enter hours"><br><br>
+        <label>Hours Worked:</label><br>
+        <input type="number" id="tsHours" min="1" max="24" placeholder="Enter hours"><br><br>
 
-    <label>Work Description:</label><br>
-    <textarea id="tsTask" rows="4" placeholder="Describe your work"></textarea><br><br>
+        <label>Work Description:</label><br>
+        <textarea id="tsTask" rows="4" placeholder="Describe your work"></textarea><br><br>
 
-    <button onclick="submitTimesheet()">Submit Timesheet</button>
+        <button onclick="submitTimesheet()">Submit Timesheet</button>
 
-    <div id="tsMessage"></div>
+        <div id="tsMessage"></div>
+
+        <div id="approvalSection" style="display:none; margin-top:10px;">
+            <strong>Status:</strong> <span id="approvalStatus">Pending</span><br><br>
+            <button onclick="approveTimesheet()">Approve</button>
+            <button onclick="rejectTimesheet()">Reject</button>
+        </div>
+    </div>
+
+    <!-- APPROVAL REQUEST SECTION (Merged from approvals.html) -->
+    <div class="card">
+        <h2>Send Approval Request</h2>
+
+        <label>Manager Email</label>
+        <input type="email" id="mgrEmail" placeholder="manager@example.com">
+
+        
+        <label>Approval Type</label>
+        <select id="reqType">
+            <option value="">-- Select Type --</option>
+            <option>Work Task</option>
+            <option>Leave Request</option>
+            <option>WFH Request</option>
+            <option>Access / Other</option>
+        </select>
+
+        <label>Message / Reason</label>
+        <textarea id="reqMsg" placeholder="Enter reason / details"></textarea>
+
+        <button onclick="submitRequest()">Submit Request</button>
+        <p id="reqStatus"></p>
+    </div>
+
 </div>
-
-</div>
-
-
 
 <footer>
     © 2025 Qual3 Technology
