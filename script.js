@@ -1,3 +1,8 @@
+async function getLoggedInUserEmail() {
+    const response = await fetch("/.auth/me");
+    const data = await response.json();
+    return data.clientPrincipal.userDetails;
+}
 /* Live Time */
 function updateTime() {
     const now = new Date();
@@ -128,42 +133,7 @@ function updateCalendar() {
 
 
 /* Timesheet Submit */
-function submitTimesheet() {
-    const date = document.getElementById("tsDate").value;
-    const hours = document.getElementById("tsHours").value;
-    const task = document.getElementById("tsTask").value;
-
-    if (!date || !hours || !task) {
-        document.getElementById("tsMessage").innerText =
-            "❌ Please fill all fields";
-        document.getElementById("tsMessage").style.color = "red";
-        return;
-    }
-
-    document.getElementById("tsMessage").innerText =
-        "✅ Timesheet submitted successfully!";
-    document.getElementById("tsMessage").style.color = "green";
-
-    document.getElementById("tsDate").value = "";
-    document.getElementById("tsHours").value = "";
-    document.getElementById("tsTask").value = "";
-}
-
-
-/* Logout */
-function logoutUser() {
-    // Use this for Azure Static Web Apps + Entra ID
-    window.location.href = "/.auth/logout?post_logout_redirect_uri=/login.html";
-
-    // If NOT using Entra ID, use:
-    // window.location.href = "login.html";
-}
-
-/* ----- Approval Requests Storage (Temporary) ----- */
-let approvals = JSON.parse(localStorage.getItem("approvals") || "[]");
-
-/* Submit Request */
-function submitRequest() {
+async function submitRequest() {
 
     const managerEmail = document.getElementById("mgrEmail").value;
     const approvalType = document.getElementById("reqType").value;
@@ -175,14 +145,23 @@ function submitRequest() {
         return;
     }
 
-    fetch("https://prod-26.centralus.logic.azure.com:443/workflows/397fa07361cc425ea8046d8327ddb70a/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=JmJjYRlnoyeXwbNob7nPrcrIvzbQCT3ZLpWSyWsukkA", {
+    let employeeEmail;
+
+    try {
+        employeeEmail = await getLoggedInUserEmail();
+    } catch (e) {
+        status.innerText = "❌ Unable to get logged-in user";
+        return;
+    }
+
+    fetch("PASTE_LOGIC_APP_HTTP_URL_HERE", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
             managerEmail: managerEmail,
-            employeeEmail: clientPrincipal.userDetails,
+            employeeEmail: employeeEmail,
             approvalType: approvalType,
             reason: reason
         })
@@ -198,4 +177,5 @@ function submitRequest() {
         status.innerText = "❌ Error sending request";
     });
 }
+
 
