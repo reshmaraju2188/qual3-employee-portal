@@ -182,7 +182,7 @@ function submitRequest() {
         },
         body: JSON.stringify({
             managerEmail: managerEmail,
-            employeeEmail: "employee@qual3.com",
+            employeeEmail: clientPrincipal.userDetails,
             approvalType: approvalType,
             reason: reason
         })
