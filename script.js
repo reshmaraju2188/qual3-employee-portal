@@ -154,7 +154,7 @@ async function submitRequest() {
         return;
     }
 
-    fetch("PASTE_LOGIC_APP_HTTP_URL_HERE", {
+    fetch("https://prod-26.centralus.logic.azure.com:443/workflows/397fa07361cc425ea8046d8327ddb70a/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=JmJjYRlnoyeXwbNob7nPrcrIvzbQCT3ZLpWSyWsukkA", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
