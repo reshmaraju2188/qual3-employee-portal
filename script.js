@@ -183,6 +183,8 @@ async function submitRequest() {
 
         // ✅ THIS is the logged-in email
         employeeEmail = authData.clientPrincipal.userDetails;
+
+        console.log("EMPLOYEE EMAIL BEING SENT:", employeeEmail);
     } catch (err) {
         console.error("Auth error:", err);
         status.innerText = "❌ Unable to read logged-in user";
