@@ -163,7 +163,7 @@ function logoutUser() {
 let approvals = JSON.parse(localStorage.getItem("approvals") || "[]");
 
 /* Submit Request */
-function submitRequest() {
+async function submitRequest() {
 
     const managerEmail = document.getElementById("mgrEmail").value;
     const approvalType = document.getElementById("reqType").value;
@@ -175,6 +175,20 @@ function submitRequest() {
         return;
     }
 
+    let employeeEmail = "";
+
+    try {
+        const authResponse = await fetch("/.auth/me");
+        const authData = await authResponse.json();
+
+        // ✅ THIS is the logged-in email
+        employeeEmail = authData.clientPrincipal.userDetails;
+    } catch (err) {
+        console.error("Auth error:", err);
+        status.innerText = "❌ Unable to read logged-in user";
+        return;
+    }
+
     fetch("https://prod-26.centralus.logic.azure.com:443/workflows/397fa07361cc425ea8046d8327ddb70a/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=JmJjYRlnoyeXwbNob7nPrcrIvzbQCT3ZLpWSyWsukkA", {
         method: "POST",
         headers: {
@@ -182,20 +196,22 @@ function submitRequest() {
         },
         body: JSON.stringify({
             managerEmail: managerEmail,
-            employeeEmail: "employee@qual3.com",
+            employeeEmail: employeeEmail,   // ✅ NO hardcoded value
             approvalType: approvalType,
             reason: reason
         })
     })
-    .then(response => {
-        if (response.ok) {
+    .then(res => {
+        if (res.ok) {
             status.innerText = "✅ Approval request sent to manager";
         } else {
             status.innerText = "❌ Failed to send request";
         }
     })
-    .catch(() => {
-        status.innerText = "❌ Error sending request";
+    .catch(err => {
+        console.error(err);
+        status.innerText = "❌ Network error";
     });
 }
+
 
