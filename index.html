@@ -103,11 +103,133 @@
         <p id="reqStatus"></p>
     </div>
 
+    <!-- ===== TECHNOLOGY DASHBOARD (MODIFIED) ===== -->
+<div class="card">
+    <h2>Technology Dashboard</h2>
+    <p>Click on any technology to view details and latest updates.</p>
+
+    <div class="tech-dashboard">
+
+        <div class="tech-item" onclick="showTech('soa')">
+            <span>SOA Suite</span>
+        </div>
+
+        <div class="tech-item" onclick="showTech('oracleDb')">
+            <span>Oracle DB</span>
+        </div>
+
+        <div class="tech-item" onclick="showTech('oci')">
+            <span>OCI</span>
+        </div>
+
+        <div class="tech-item" onclick="showTech('github')">
+            <span>GitHub</span>
+        </div>
+
+        <div class="tech-item" onclick="showTech('jenkins')">
+            <span>Jenkins</span>
+        </div>
+
+        <div class="tech-item" onclick="showTech('docker')">
+            <span>Docker</span>
+        </div>
+
+        <div class="tech-item" onclick="showTech('kubernetes')">
+            <span>Kubernetes</span>
+        </div>
+
+        <div class="tech-item" onclick="showTech('terraform')">
+            <span>Terraform</span>
+        </div>
+
+        <div class="tech-item" onclick="showTech('ansible')">
+            <span>Ansible</span>
+        </div>
+
+        <div class="tech-item" onclick="showTech('prometheus')">
+            <span>Prometheus</span>
+        </div>
+
+        <div class="tech-item" onclick="showTech('grafana')">
+            <span>Grafana</span>
+        </div>
+
+    </div>
 </div>
+
+<!-- ===== External Tools Dashboard ===== -->
+<div class="card">
+    <h2>External Tools</h2>
+    <p>Quick access to Google Sheets, Google Drive, and OneDrive.</p>
+
+    <div class="tools-dashboard">
+        <div class="tool-item" onclick="openTool('googleSheets')">
+            <span>Google Sheets</span>
+            <span class="tooltip">Create, view, and edit spreadsheets</span>
+        </div>
+
+        <div class="tool-item" onclick="openTool('googleDrive')">
+            <span>Google Drive</span>
+            <span class="tooltip">Store, share, and organize files in the cloud</span>
+        </div>
+
+        <div class="tool-item" onclick="openTool('oneDrive')">
+            <span>OneDrive</span>
+            <span class="tooltip">Access and manage your Microsoft cloud files</span>
+        </div>
+    </div>
+</div>
+
+<!-- ===== AZURE USAGE REPORT DASHBOARD ===== -->
+<div class="card">
+    <h2>Azure Usage & Cost Reports</h2>
+    <p>Click a report to open Azure usage data.</p>
+
+    <div class="report-dashboard">
+
+        <div class="report-item" onclick="openAzureReport('cost')">
+            <span>Azure Cost Analysis</span>
+        </div>
+
+        <div class="report-item" onclick="openAzureReport('usage')">
+            <span>Azure Usage Report</span>
+        </div>
+
+        <div class="report-item" onclick="openAzureReport('billing')">
+            <span>Azure Billing</span>
+        </div>
+
+        <div class="report-item" onclick="openAzureReport('advisor')">
+            <span>Azure Advisor</span>
+        </div>
+
+        <div class="report-item" onclick="openAzureReport('monitor')">
+            <span>Azure Monitor</span>
+        </div>
+
+        <div class="report-item" onclick="openAzureReport('loganalytics')">
+            <span>Log Analytics</span>
+        </div>
+
+    </div>
+</div>
+
+
+</div>
+
 
 <footer>
     © 2025 Qual3 Technology
 </footer>
+<!-- ===== TECH DETAILS POPUP ===== -->
+<div id="overlay" class="overlay hidden" onclick="closeTech()"></div>
+
+<div id="techDetails" class="tech-details hidden">
+    <button class="close-btn" onclick="closeTech()">✖ Close</button>
+    <h2 id="techTitle"></h2>
+    <p id="techDesc"></p>
+    <a id="techNews" href="#" target="_blank">🔗 View Latest News</a>
+</div>
 
 </body>
 </html>

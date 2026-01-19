@@ -216,4 +216,104 @@ async function submitRequest() {
     });
 }
 
+const techData = {
+    soa: {
+        title: "Oracle SOA Suite",
+        desc: "A middleware platform for building, deploying, and managing service-oriented architecture (SOA) integrations.",
+        news: "https://www.oracle.com/news/"
+    },
+    oracleDb: {
+        title: "Oracle Database Systems",
+        desc: "Enterprise-grade relational database providing high performance, security, and scalability.",
+        news: "https://www.oracle.com/database/"
+    },
+    oci: {
+        title: "Oracle Cloud Infrastructure (OCI)",
+        desc: "Oracle’s cloud platform providing compute, storage, networking, and enterprise services.",
+        news: "https://www.oracle.com/cloud/"
+    },
+    github: {
+        title: "GitHub",
+        desc: "A platform for source code management and collaboration using Git.",
+        news: "https://github.blog/"
+    },
+    jenkins: {
+        title: "Jenkins",
+        desc: "Open-source automation server for CI/CD pipelines.",
+        news: "https://www.jenkins.io/blog/"
+    },
+    docker: {
+        title: "Docker",
+        desc: "Platform for developing and running applications in containers.",
+        news: "https://www.docker.com/blog/"
+    },
+    kubernetes: {
+        title: "Kubernetes",
+        desc: "Container orchestration platform for automated deployment and scaling.",
+        news: "https://kubernetes.io/blog/"
+    },
+    terraform: {
+        title: "Terraform",
+        desc: "Infrastructure as Code tool for provisioning cloud resources.",
+        news: "https://www.hashicorp.com/blog"
+    },
+    ansible: {
+        title: "Ansible",
+        desc: "Automation tool for configuration management and deployment.",
+        news: "https://www.ansible.com/blog"
+    },
+    prometheus: {
+        title: "Prometheus",
+        desc: "Monitoring and alerting toolkit for cloud-native systems.",
+        news: "https://prometheus.io/blog/"
+    },
+    grafana: {
+        title: "Grafana",
+        desc: "Visualization and analytics platform for monitoring data.",
+        news: "https://grafana.com/blog/"
+    }
+};
 
+function showTech(key) {
+    document.getElementById("techTitle").innerText = techData[key].title;
+    document.getElementById("techDesc").innerText = techData[key].desc;
+    document.getElementById("techNews").href = techData[key].news;
+
+    document.getElementById("overlay").classList.remove("hidden");
+    document.getElementById("techDetails").classList.remove("hidden");
+}
+
+function closeTech() {
+    document.getElementById("overlay").classList.add("hidden");
+    document.getElementById("techDetails").classList.add("hidden");
+}
+/* Open external tools */
+function openTool(tool) {
+    let url = "";
+    switch(tool) {
+        case "googleSheets":
+            url = "https://docs.google.com/spreadsheets/";
+            break;
+        case "googleDrive":
+            url = "https://drive.google.com/";
+            break;
+        case "oneDrive":
+            url = "https://onedrive.live.com/";
+            break;
+    }
+    window.open(url, "_blank"); // opens in a new tab
+}
+
+function openAzureReport(type) {
+
+    const azureLinks = {
+        cost: "https://portal.azure.com/#view/Microsoft_Azure_CostManagement/Menu/costanalysis",
+        usage: "https://portal.azure.com/#view/Microsoft_Azure_CostManagement/Menu/usage",
+        billing: "https://portal.azure.com/#view/Microsoft_Azure_Billing/SubscriptionsBlade",
+        advisor: "https://portal.azure.com/#view/Microsoft_Azure_Advisor/AdvisorMenuBlade",
+        monitor: "https://portal.azure.com/#view/Microsoft_Azure_Monitoring/AzureMonitoringBrowseBlade",
+        loganalytics: "https://portal.azure.com/#view/Microsoft_Azure_Monitoring/AzureMonitoringBrowseBlade/logAnalytics"
+    };
+
+    window.open(azureLinks[type], "_blank");
+}

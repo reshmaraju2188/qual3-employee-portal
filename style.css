@@ -138,3 +138,155 @@ button:hover {
 .today {
     outline: 2px solid #0078d4;
 }
+
+/* ===== TECHNOLOGY DASHBOARD (3 PER ROW) ===== */
+.tech-dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 in one row */
+    gap: 20px;
+    margin-top: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ===== SMALL TECH CARD STYLE ===== */
+.tech-item {
+    background: white;
+    padding: 12px 10px;      /* reduced padding */
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 1px 1px 6px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    min-height: 60px;       /* smaller height */
+    max-height: 70px;
+}
+
+/* Make text bold & centered */
+.tech-item span {
+    font-weight: bold;
+    font-size: 14px;        /* slightly smaller font */
+    text-align: center;
+}
+
+/* Hover effect */
+.tech-item:hover {
+    transform: translateY(-2px);
+    background: #eef1ff;
+}
+
+
+/* ---- POPUP STYLES ---- */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.tech-details {
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -25%);
+    width: 40%;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.2);
+    z-index: 2000;
+}
+
+.hidden {
+    display: none;
+}
+
+.close-btn {
+    float: right;
+    border: none;
+    background: red;
+    color: white;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+/* ===== EXTERNAL TOOLS DASHBOARD ===== */
+.tools-dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 in one row */
+    gap: 15px;
+    margin-top: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tool-item {
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 1px 1px 6px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Tooltip styling */
+.tool-item {
+    position: relative; /* needed for tooltip */
+}
+
+.tool-item .tooltip {
+    visibility: hidden;
+    width: 180px;
+    background-color: #0a1f44;
+    color: white;
+    text-align: center;
+    padding: 6px 8px;
+    border-radius: 6px;
+    position: absolute;
+    bottom: 110%; /* above the card */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 10;
+}
+
+.tool-item:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.report-dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.report-item {
+    background: #e6f2ff;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.report-item:hover {
+    background: #cce0ff;
+    transform: scale(1.05);
+}
