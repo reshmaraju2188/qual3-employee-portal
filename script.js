@@ -8,43 +8,51 @@ setInterval(updateTime, 1000);
 updateTime();
 
 /* Year-wise Indian Holidays */
+/* Year-wise US Federal Holidays */
 const holidayData = {
     "2024": {
-        "01-01": "New Year",
-        "01-26": "Republic Day 🇮🇳",
-        "03-25": "Holi",
-        "04-09": "Ugadi",
-        "08-15": "Independence Day 🇮🇳",
-        "10-02": "Gandhi Jayanti 🇮🇳",
-        "11-01": "Kannada Rajyotsava",
-        "12-25": "Christmas"
+        "01-01": "New Year's Day",
+        "01-15": "Martin Luther King Jr. Day",
+        "02-19": "Presidents' Day",
+        "05-27": "Memorial Day",
+        "06-19": "Juneteenth",
+        "07-04": "Independence Day 🇺🇸",
+        "09-02": "Labor Day",
+        "10-14": "Columbus Day",
+        "11-11": "Veterans Day",
+        "11-28": "Thanksgiving Day",
+        "12-25": "Christmas Day"
     },
+
     "2025": {
-        "01-01": "New Year",
-        "01-14": "Makar Sankranti",
-        "01-26": "Republic Day 🇮🇳",
-        "03-14": "Holi",
-        "03-31": "Ugadi",
-        "04-18": "Good Friday",
-        "05-01": "Labour Day",
-        "08-15": "Independence Day 🇮🇳",
-        "08-27": "Ganesh Chaturthi",
-        "10-02": "Gandhi Jayanti 🇮🇳",
-        "10-21": "Diwali",
-        "11-01": "Kannada Rajyotsava",
-        "12-25": "Christmas"
+        "01-01": "New Year's Day",
+        "01-20": "Martin Luther King Jr. Day",
+        "02-17": "Presidents' Day",
+        "05-26": "Memorial Day",
+        "06-19": "Juneteenth",
+        "07-04": "Independence Day 🇺🇸",
+        "09-01": "Labor Day",
+        "10-13": "Columbus Day",
+        "11-11": "Veterans Day",
+        "11-27": "Thanksgiving Day",
+        "12-25": "Christmas Day"
     },
+
     "2026": {
-        "01-01": "New Year",
-        "01-26": "Republic Day 🇮🇳",
-        "03-04": "Holi",
-        "03-20": "Ugadi",
-        "08-15": "Independence Day 🇮🇳",
-        "10-02": "Gandhi Jayanti 🇮🇳",
-        "10-08": "Diwali",
-        "12-25": "Christmas"
+        "01-01": "New Year's Day",
+        "01-19": "Martin Luther King Jr. Day",
+        "02-16": "Presidents' Day",
+        "05-25": "Memorial Day",
+        "06-19": "Juneteenth",
+        "07-04": "Independence Day 🇺🇸",
+        "09-07": "Labor Day",
+        "10-12": "Columbus Day",
+        "11-11": "Veterans Day",
+        "11-26": "Thanksgiving Day",
+        "12-25": "Christmas Day"
     }
 };
+
 
 
 /* Generate Calendar */
