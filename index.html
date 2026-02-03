@@ -101,6 +101,13 @@
 
         <button onclick="submitRequest()">Submit Request</button>
         <p id="reqStatus"></p>
+
+        <!-- Approval Replies Section -->
+        <div id="approvalRepliesSection" style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px; display: none;">
+            <h3>Manager Response</h3>
+            <button onclick="fetchApprovalReplies()" class="refresh-btn">🔄 Check for Replies</button>
+            <div id="approvalRepliesList" style="margin-top: 10px;"></div>
+        </div>
     </div>
 
     <!-- ===== TECHNOLOGY DASHBOARD (MODIFIED) ===== -->
@@ -214,6 +221,22 @@
     </div>
 </div>
 
+<!-- Floating ChatBot -->
+<div class="chatbot-button" id="chatbot-button" onclick="toggleChat()"></div>
+
+<div class="chat-window" id="chat-window">
+    <div class="chat-header">
+        <h3>Qual3 Assistant</h3>
+        <button class="close-btn" onclick="toggleChat()">×</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+        <div class="message bot">Hello! How can I help you today?</div>
+    </div>
+    <div class="chat-input">
+        <textarea id="message-input" placeholder="Type a message..." rows="3" onkeypress="handleKeyPress(event)"></textarea>
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
 
 </div>
 

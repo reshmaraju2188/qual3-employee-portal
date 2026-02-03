@@ -1,17 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Qual3 Technologies - Login</title>
-</head>
-<body style="text-align:center; font-family:Segoe UI">
-  <img src="logo.png" width="180" />
-  <h2>Welcome to Qual3 Technologies</h2>
-  <p>Please sign in using your Microsoft account</p>
+  <title>Employee Portal - Login</title>
 
-  <a href="/.auth/login/aad">
-    <button style="padding:10px 20px; font-size:16px;">
-      Sign in with Microsoft
-    </button>
-  </a>
+  <style>
+    body {
+      font-family: Segoe UI, sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .login-btn {
+      padding: 12px 24px;
+      background: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-btn:hover {
+      background: #005a9e;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-container">
+    <img src="logo.png" width="90" alt="Company Logo">
+    <h2>Employee Portal</h2>
+    <p>Sign in using your Microsoft account</p>
+
+    <a href="/.auth/login/aad">
+      <button class="login-btn">Sign in with Microsoft</button>
+    </a>
+  </div>
+
 </body>
 </html>
+

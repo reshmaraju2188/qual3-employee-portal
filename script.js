@@ -143,13 +143,13 @@ function submitTimesheet() {
 
     if (!date || !hours || !task) {
         document.getElementById("tsMessage").innerText =
-            "❌ Please fill all fields";
+            "Please fill all fields";
         document.getElementById("tsMessage").style.color = "red";
         return;
     }
 
     document.getElementById("tsMessage").innerText =
-        "✅ Timesheet submitted successfully!";
+        "Timesheet submitted successfully!";
     document.getElementById("tsMessage").style.color = "green";
 
     document.getElementById("tsDate").value = "";
@@ -179,7 +179,7 @@ async function submitRequest() {
     const status = document.getElementById("reqStatus");
 
     if (!managerEmail || !approvalType || !reason) {
-        status.innerText = "❌ Please fill all fields";
+        status.innerText = "Please fill all fields";
         return;
     }
 
@@ -195,7 +195,7 @@ async function submitRequest() {
         console.log("EMPLOYEE EMAIL BEING SENT:", employeeEmail);
     } catch (err) {
         console.error("Auth error:", err);
-        status.innerText = "❌ Unable to read logged-in user";
+        status.innerText = "Unable to read logged-in user";
         return;
     }
 
@@ -213,15 +213,76 @@ async function submitRequest() {
     })
     .then(res => {
         if (res.ok) {
-            status.innerText = "✅ Approval request sent to manager";
+            status.innerText = "Approval request sent to manager";
+            // Show the approval replies section after request is sent
+            document.getElementById("approvalRepliesSection").style.display = "block";
+            // Auto-fetch replies after a short delay
+            setTimeout(() => fetchApprovalReplies(), 2000);
         } else {
-            status.innerText = "❌ Failed to send request";
+            status.innerText = "Failed to send request";
         }
     })
     .catch(err => {
         console.error(err);
-        status.innerText = "❌ Network error";
+        status.innerText = "Network error";
     });
+}
+
+/* Fetch Approval Replies from Manager */
+async function fetchApprovalReplies() {
+    const managerEmail = document.getElementById("mgrEmail").value;
+    const repliesList = document.getElementById("approvalRepliesList");
+    const statusEl = document.getElementById("reqStatus");
+
+    if (!managerEmail) {
+        statusEl.innerText = "Please enter manager email first";
+        return;
+    }
+
+    repliesList.innerHTML = '<p style="color: #666;">Fetching replies...</p>';
+
+    try {
+        // Call Azure Function to fetch emails from manager
+        const response = await fetch("/api/getApprovalReplies", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                managerEmail: managerEmail
+            })
+        });
+
+        if (!response.ok) {
+            repliesList.innerHTML = '<p style="color: #666;">No replies yet. Check back later.</p>';
+            return;
+        }
+
+        const data = await response.json();
+
+        if (data.replies && data.replies.length > 0) {
+            let repliesHTML = '';
+            data.replies.forEach(reply => {
+                const status = reply.status || 'PENDING';
+                const statusColor = status === 'APPROVED' ? '#4CAF50' : status === 'REJECTED' ? '#F44336' : '#FF9800';
+                
+                repliesHTML += `
+                    <div style="border-left: 4px solid ${statusColor}; padding: 10px; margin: 10px 0; background: #f9f9f9;">
+                        <strong>Status: <span style="color: ${statusColor};">${status}</span></strong><br>
+                        <small style="color: #666;">From: ${managerEmail}</small><br>
+                        <small style="color: #666;">Date: ${new Date(reply.receivedDateTime).toLocaleString()}</small><br>
+                        <p>${reply.bodyPreview || reply.body || ''}</p>
+                    </div>
+                `;
+            });
+            repliesList.innerHTML = repliesHTML;
+        } else {
+            repliesList.innerHTML = '<p style="color: #666;">No replies yet. Check back later.</p>';
+        }
+    } catch (err) {
+        console.error("Error fetching replies:", err);
+        repliesList.innerHTML = '<p style="color: red;">Error fetching replies. Make sure your Azure Function is configured.</p>';
+    }
 }
 
 const techData = {
@@ -324,4 +385,39 @@ function openAzureReport(type) {
     };
 
     window.open(azureLinks[type], "_blank");
+}
+
+function toggleChat() {
+    const chatWindow = document.getElementById('chat-window');
+    chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+}
+
+function sendMessage() {
+    const input = document.getElementById('message-input');
+    const messages = document.getElementById('chat-messages');
+    if (input.value.trim() !== '') {
+        // Add user message
+        const userMessage = document.createElement('div');
+        userMessage.className = 'message user';
+        userMessage.textContent = input.value;
+        messages.appendChild(userMessage);
+
+        // Simulate bot response (replace with actual bot logic)
+        setTimeout(() => {
+            const botMessage = document.createElement('div');
+            botMessage.className = 'message bot';
+            botMessage.textContent = 'Thanks for your message! This is a demo response.';
+            messages.appendChild(botMessage);
+            messages.scrollTop = messages.scrollHeight;
+        }, 1000);
+
+        input.value = '';
+        messages.scrollTop = messages.scrollHeight;
+    }
+}
+
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
 }
